@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const sequelize = require("../../config/connection");
 const { User, Music, FriendTag, MusicTag } = require("../../models");
 
@@ -110,4 +111,3 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
-
