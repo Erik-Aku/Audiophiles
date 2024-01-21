@@ -1,9 +1,10 @@
 const router = require("express").Router();
 
+const sequelize = require("../../config/connection");
 const { User, Music, FriendTag, MusicTag } = require("../../models");
 
 // get all user
-router.get("./", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const userData = await User.findAll({
       include: [{ model: Music }],
@@ -20,7 +21,7 @@ router.get("./", async (req, res) => {
 });
 
 // get one user by id
-router.get("./", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
       const userData = await User.findByPk(req.params.id, {
         include: [{ model: Music }],
@@ -36,12 +37,20 @@ router.get("./", async (req, res) => {
     }
   });
 
-// get only the friend list of a user
+// find one user by id and get the friend list of this user  
 //modi
-router.get("./", async (req, res) => {
+router.get("/friendlist/:id", async (req, res) => {
     try {
       const userData = await User.findByPk(req.params.id, {
         include: [{ model: Music }],
+        attributes:{
+          include:[
+             [sequelize.literal(
+              '(SELECT b.id CONCAT(b.first_name, ' ', b.last_name) AS friend_name FROM user a RIGHT JOIN user b on )'
+             ),]
+
+          ]
+        }
       });
       if (!userData) {
         res.status(404).json("No product is found!");
