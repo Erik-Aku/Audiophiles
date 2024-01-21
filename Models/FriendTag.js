@@ -24,7 +24,7 @@ FriendTag.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "music_tag",
+    modelName: "friend_tag",
   }
 );
 module.exports = FriendTag;

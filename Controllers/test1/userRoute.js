@@ -46,7 +46,7 @@ router.get("/friendlist/:id", async (req, res) => {
         attributes:{
           include:[
              [sequelize.literal(
-              '(SELECT b.id CONCAT(b.first_name, ' ', b.last_name) AS friend_name FROM user a RIGHT JOIN user b on )'
+              '(SELECT b.music_list CONCAT(b.first_name, " ", b.last_name) AS friend_name FROM user a JOIN friend  RIGHT JOIN user b on user.id = user.id)'
              ),]
 
           ]
