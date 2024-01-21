@@ -9,16 +9,16 @@ User.hasMany(FriendTag, {
   onDelete: "CASCADE",
 });
 
-FriendTag.belongsto(User, {
+FriendTag.belongsTo(User, {
   foreignKey: "user_id",
 });
 
-User.belongstoMany(Music, {
+User.belongsToMany(Music, {
   through: MusicTag,
   foreignKey: "user_id",
 });
 
-Music.belongstoMany(User, {
+Music.belongsToMany(User, {
   through: MusicTag,
   foreignKey: "music_id",
 });

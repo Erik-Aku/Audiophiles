@@ -3,3 +3,5 @@ node_modules
 .DS_Store
 .package_lock.json
 .vscode
+seeds/test
+controllers/test
