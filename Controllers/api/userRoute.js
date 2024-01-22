@@ -3,7 +3,6 @@ const router = require("express").Router();
 const sequelize = require("../../config/connection");
 const { User, Music, FriendTag, MusicTag } = require("../../models");
 
-
 // get all user and their music
 router.get("/", async (req, res) => {
   try {
@@ -44,16 +43,6 @@ router.get("/friendlist/:id", async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
       include: [{ model: Music }, { model: FriendTag }],
-      attributes: {
-        include: [
-          [
-            sequelize.literal(
-              '(SELECT b.music_list CONCAT(b.first_name, " ", b.last_name) AS friend_name FROM user a JOIN friend_tag ON a.id = friend_tag.user_id RIGHT JOIN user b on a.id = b.id)'
-            ),
-            "Friend_musiclist",
-          ],
-        ],
-      },
     });
     if (!userData) {
       res.status(404).json("No product is found!");
@@ -114,7 +103,7 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({
         message: "No category found with that id",
       });
-      console.log("successfully delete one user!")
+      console.log("successfully delete one user!");
       res.status(200).json(deleteOneUser);
     }
   } catch (err) {
