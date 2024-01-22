@@ -18,6 +18,13 @@ FriendTag.init(
         key: "id",
       },
     },
+    friend_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "user",
+        key: "id",
+      },
+    },
   },
   {
     sequelize,

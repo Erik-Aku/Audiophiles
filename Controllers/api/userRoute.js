@@ -66,6 +66,17 @@ router.get("/friendlist/:id", async (req, res) => {
   }
 });
 
+/*
+mysql> select * from user where user.id = 2
+    -> ;
++----+------------+-----------+---------------+----------+
+| id | first_name | last_name | email         | password |
++----+------------+-----------+---------------+----------+
+|  2 | FN2        | LN2       | 222@gmail.com | 2222aaaa |
++----+------------+-----------+---------------+----------+
+1 row in set (0.00 sec)
+*/
+
 // add one user
 router.post("/", async (req, res) => {
   try {
