@@ -1,13 +1,13 @@
 const router = require("express").Router();
 
 const sequelize = require("../../config/connection");
-const { User, Music, FriendTag, MusicTag } = require("../../models");
+const { User, Music, FriendTag, MusicTag } = require("../../Models/index.js")
 
 // get all user and their music
 router.get("/", async (req, res) => {
   try {
     const userData = await User.findAll({
-      include: [{ model: Music }],
+      include: [{ model: Music }, { model: FriendTag }],
     });
     if (!userData) {
       res.status(404).json("No product is found!");

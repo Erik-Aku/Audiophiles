@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Music, FriendTag, MusicTag } = require("../../models");
+const { User, Music, FriendTag, MusicTag } = require("../../Models/index.js");
 
 //get all music s
 router.get("/", async (res, req) => {

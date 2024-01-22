@@ -3,7 +3,7 @@ const seedMusic = require("./seed-music");
 const seedMusicTag = require("./seed-musicTag");
 const seedFriendTag = require("./seed-friendTag");
 
-const sequelize = require("../../config/connection");
+const sequelize = require("../config/connection");
 
 const seedAll = async () => {
   await sequelize.sync({ force: true }); // force:true = drop all existing tables if exists

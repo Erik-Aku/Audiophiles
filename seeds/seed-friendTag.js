@@ -1,4 +1,4 @@
-const { FriendTag } = require("../../models/index");
+const { FriendTag } = require("../Models/index");
 
 const friendTagData = [
   {
