@@ -13,11 +13,12 @@ FriendTag.belongsTo(User, {
   foreignKey: "user_id",
 });
 
-// add user has many user
+// add user has many user , add otherkey
 User.belongsToMany(User, {
   through: FriendTag,
   as: "userFriends",
   foreignKey: "friend_id",
+  otherKey: 'user_id'
 });
 
 User.belongsToMany(Music, {
