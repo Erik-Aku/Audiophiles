@@ -3,6 +3,7 @@ const router = require("express").Router();
 const sequelize = require("../../config/connection");
 const { User, Music, FriendTag, MusicTag } = require("../../models");
 
+
 // get all user and their music
 router.get("/", async (req, res) => {
   try {
