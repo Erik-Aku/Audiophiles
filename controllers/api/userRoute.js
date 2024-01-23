@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
-const sequelize = require("../../config/connection");
-const { User, Music, FriendTag, MusicTag } = require("../../Models/index.js");
+const sequelize = require("../../config/connection.js");
+const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 
 // get all user and their music
 router.get("/", async (req, res) => {
