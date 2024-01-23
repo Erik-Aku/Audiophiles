@@ -35,5 +35,5 @@ module.exports = {
   User,
   FriendTag,
   MusicTag,
-  Music,
+  Music
 };
