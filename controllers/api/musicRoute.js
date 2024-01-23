@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Music, FriendTag, MusicTag } = require("../../modelsddf/index.js");
+const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 
 //get all music s
 router.get("/", async (res, req) => {

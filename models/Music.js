@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
-const sequelize = require("../configdfd/connection");
+const sequelize = require("../config/connection");
 
 class Music extends Model {}
 
