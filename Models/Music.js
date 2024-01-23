@@ -13,15 +13,15 @@ Music.init(
       autoIncrement: true,
     },
     artist_name: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     album_name: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     album_image: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },
@@ -30,7 +30,7 @@ Music.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "music_tag",
+    modelName: "music",
   }
 );
 

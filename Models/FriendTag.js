@@ -18,13 +18,20 @@ FriendTag.init(
         key: "id",
       },
     },
+    friend_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "user",
+        key: "id",
+      },
+    },
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "music_tag",
+    modelName: "friend_tag",
   }
 );
 module.exports = FriendTag;

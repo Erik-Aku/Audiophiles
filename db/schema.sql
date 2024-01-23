@@ -1,2 +1,3 @@
-DROP DATABASE IF EXISTS audiophiles_db;
-CREATE DATABASE audiophiles_db;
+DROP DATABASE IF EXISTS audiophile_db;
+
+CREATE DATABASE audiophile_db;
