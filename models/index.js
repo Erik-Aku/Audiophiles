@@ -1,26 +1,33 @@
 // import models
-const User = require("./user");
+const User = require("./users.js");
 const FriendTag = require("./FriendTag");
 const MusicTag = require("./MusicTags");
 const Music = require("./Music");
 
+// user-to-user self-referencing many-to-many association
 User.hasMany(FriendTag, {
-  foreignKey: "user_id",
-  onDelete: "CASCADE",
+  as:"UserHasTag",
+  foreignKey: "friend_id",
 });
 
 FriendTag.belongsTo(User, {
+  as:"FriendBelongsToUser",
   foreignKey: "user_id",
 });
 
-// add user has many user , add otherkey
 User.belongsToMany(User, {
+  as: "UserToUser",
   through: FriendTag,
-  as: "userFriends",
-  foreignKey: "friend_id",
-  otherKey: 'user_id'
+  foreignKey: "user_id",
 });
 
+User.belongsToMany(User, {
+  as: "UserFromUser",
+  through:FriendTag,
+  foreignKey: "friend_id",
+});
+
+// user-to-music many-to-many association
 User.belongsToMany(Music, {
   through: MusicTag,
   foreignKey: "user_id",
@@ -35,5 +42,5 @@ module.exports = {
   User,
   FriendTag,
   MusicTag,
-  Music
+  Music,
 };

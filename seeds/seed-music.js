@@ -1,4 +1,4 @@
-const {Music} = require("../Models/index.js");
+const {Music} = require("../models/index.js");
 
 const musicData = [
     {
