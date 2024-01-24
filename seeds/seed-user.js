@@ -1,4 +1,4 @@
-const { User } = require("../Models/index.js");
+const { User } = require("../models/index.js");
 
 const userData = [
   {
