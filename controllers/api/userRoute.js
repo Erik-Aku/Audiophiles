@@ -62,8 +62,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// find one user by id and get the friend list of this user
-// in progress
+/*
 router.get("/friendlist/:id", async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
@@ -80,44 +79,34 @@ router.get("/friendlist/:id", async (req, res) => {
     console.log(err);
   }
 });
-
-/*
-mysql> select * from user where user.id = 2
-    -> ;
-+----+------------+-----------+---------------+----------+
-| id | first_name | last_name | email         | password |
-+----+------------+-----------+---------------+----------+
-|  2 | FN2        | LN2       | 222@gmail.com | 2222aaaa |
-+----+------------+-----------+---------------+----------+
-1 row in set (0.00 sec)
 */
 
-// add one user
-/*
-router.post("/", async (req, res) => {
+// update an user by its id : when you want to change the profile data of an user
+router.put("/:id", async (req, res) => {
   try {
-    const userData = await User.create(
-      {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        password: req.body.password,
+    /* example: 
+    req.body = {
+      first_name: req.body.first_name,
+      last_name : req.body.last_name,
+      email: req.body.email,
+      password: req.body.password,
+    } */
+    const newUserData = await User.update(req.body, {
+      where: {
+        id: req.params.id,
       },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
-
-    res.status(200).json(userData);
-    console.log("Successfully added one user!");
+    });
+    if (!newUserData) {
+      res.status(404).json("No user with this id is found!");
+      console.log("No user with this id is found!");
+      return;
+    }
+    res.status(200).json(newUserData);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
   }
 });
-*/
 
 //delete one user by its id
 router.delete("/:id", async (req, res) => {
@@ -138,5 +127,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 
 module.exports = router;

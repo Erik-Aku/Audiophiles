@@ -79,4 +79,7 @@ router.delete("/:id", async (res, req) => {
   }
 });
 
+
+// Todo: create a route for when click save a music to your music list
+// Todo: create a route for when you want to delete a music from your music list
 module.exports = router;
