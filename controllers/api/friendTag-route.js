@@ -7,7 +7,7 @@ const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 // friend_id from html element
 router.post("/", async (req, res) => {
   try {
-    if (!req.session.logged_id) {
+    if (!req.session.logged_in) {
       res.status(401).json("Please log in first!"); // 401 = Unauthorized error
       console.log("the user is not logged in");
       return;
@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
 // delete route when you click to unfollow an user
 router.delete("/", async (req, res) => {
   try {
-    if (!req.session.logged_id) {
+    if (!req.session.logged_in) {
       res.status(401).json("Please log in first!"); // 401 = Unauthorized error
       console.log("the user is not logged in");
       return;

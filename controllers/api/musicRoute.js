@@ -3,7 +3,7 @@ const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 //path /music
 
 //get all music s
-router.get("/", async (res, req) => {
+router.get("/db", async (res, req) => {
   try {
     const musicData = Music.findAll();
     if (!musicData) {
@@ -17,7 +17,7 @@ router.get("/", async (res, req) => {
 });
 
 //get one by its id
-router.get("/:id", async (res, req) => {
+router.get("/db/:id", async (res, req) => {
   try {
     const musicData = Music.findByPk(req.param.id);
     if (!musicData) {
@@ -30,20 +30,34 @@ router.get("/:id", async (res, req) => {
   }
 });
 
+// Insert a music into music table for when click save a music to your music list
 router.post("/", async (res, req) => {
   try {
+    if (!req.session.logged_in) {
+      res.status(401).json("Please log in first!"); // 401 = Unauthorized error
+      console.log("the user is not logged in");
+      return;
+    }
+
     const addOneMusic = await Music.create({
       artist_name: req.body.artist_name,
       album_name: req.body.album_name,
       album_image: req.body.album_image,
     });
     res.status(200).json(addOneMusic);
+
+    const addOneMusicTag = await MusicTag.create({
+      user_id: req.session.user_id,
+      music_id: addOneMusic.id,
+    });
+    res.status(200).json(addOneMusicTag);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.put("/:id", async (req, res) => {
+// update the information of a music stored in the database
+router.put("/db/:id", async (req, res) => {
   try {
     const updatedMusicData = await Music.update(
       {
@@ -67,7 +81,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (res, req) => {
+router.delete("/db/:id", async (res, req) => {
   try {
     const deleteOneMusic = await Music.destroy({
       where: {
@@ -80,7 +94,4 @@ router.delete("/:id", async (res, req) => {
   }
 });
 
-
-// Todo: create a route for when click save a music to your music list
-// Todo: create a route for when you want to delete a music from your music list
 module.exports = router;
