@@ -2,6 +2,6 @@ node_modules
 .env
 .DS_Store
 .vscode
-.package-lock.json
+package-lock.json
 seeds/test
 controllers/test1
