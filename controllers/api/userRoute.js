@@ -1,6 +1,4 @@
 const router = require("express").Router();
-
-const sequelize = require("../../config/connection.js");
 const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 //path : /users
 
@@ -68,54 +66,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// add one user
-
-router.post("/", async (req, res) => {
-  try {
-    /*
-    req.body = {
-      first_name: req.body.first_name,
-      last_name : req.body.last_name,
-      email: req.body.email,
-      password: req.body.password,
-    } */
-    const newUserData = await User.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!newUserData) {
-      res.status(404).json("No user with this id is found!");
-      console.log("No user with this id is found!");
-      return;
-    }
-    res.status(200).json(newUserData);
-  } catch (err) {
-    res.status(500).json(err);
-    console.log(err);
-  }
-});
-
-//delete one user by its id
-router.delete("/db/:id", async (req, res) => {
-  try {
-    const deleteOneUser = await User.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!categoryData) {
-      res.status(404).json({
-        message: "No user found with that id",
-      });
-      console.log("successfully delete one user!");
-      res.status(200).json(deleteOneUser);
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 // Erik's routes----------------------------------------------------
 
 router.post("/", async (req, res) => {
@@ -178,5 +128,64 @@ router.post("/login", async (req, res) => {
 //     res.status(404).end();
 //   }
 // });
+
+//db: update an user
+router.put("/db/:id", async (req, res) => {
+  try {
+    /* example
+    req.body = {
+      first_name: req.body.first_name,
+      last_name : req.body.last_name,
+      email: req.body.email,
+      password: req.body.password,
+    }  */
+    const newUserData = await User.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).json(newUserData);
+  } catch (err) {
+    res.status(500).json(err);
+    console.log(err);
+  }
+});
+
+//db: add a user
+router.post("/db", async (req, res) => {
+  try {
+    const userData = await User.create({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      password: req.body.password,
+    });
+    res.status(200).json(userData);
+    console.log("Successfully added one user!");
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+//db: delete one user by its id
+router.delete("/db/:id", async (req, res) => {
+  try {
+    const deleteOneUser = await User.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!categoryData) {
+      res.status(404).json({
+        message: "No user found with that id",
+      });
+      console.log("successfully delete one user!");
+      res.status(200).json(deleteOneUser);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;

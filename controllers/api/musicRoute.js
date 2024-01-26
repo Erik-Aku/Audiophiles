@@ -2,6 +2,32 @@ const router = require("express").Router();
 const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 //path /music
 
+// Insert a music into music table for when click save a music to your music list
+router.post("/", async (res, req) => {
+  try {
+    if (!req.session.logged_in) {
+      res.status(401).json("Please log in first!"); // 401 = Unauthorized error
+      console.log("the user is not logged in");
+      return;
+    }
+
+    const addOneMusic = await Music.create({
+      artist_name: req.body.artist_name,
+      album_name: req.body.album_name,
+      album_image: req.body.album_image,
+    });
+    res.status(200).json(addOneMusic);
+
+    const addOneMusicTag = await MusicTag.create({
+      user_id: req.session.user_id,
+      music_id: addOneMusic.id,
+    });
+    res.status(200).json(addOneMusicTag);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //get all music s
 router.get("/db", async (res, req) => {
   try {
@@ -25,32 +51,6 @@ router.get("/db/:id", async (res, req) => {
       return;
     }
     res.status(200).json(musicData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// Insert a music into music table for when click save a music to your music list
-router.post("/", async (res, req) => {
-  try {
-    if (!req.session.logged_in) {
-      res.status(401).json("Please log in first!"); // 401 = Unauthorized error
-      console.log("the user is not logged in");
-      return;
-    }
-
-    const addOneMusic = await Music.create({
-      artist_name: req.body.artist_name,
-      album_name: req.body.album_name,
-      album_image: req.body.album_image,
-    });
-    res.status(200).json(addOneMusic);
-
-    const addOneMusicTag = await MusicTag.create({
-      user_id: req.session.user_id,
-      music_id: addOneMusic.id,
-    });
-    res.status(200).json(addOneMusicTag);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -81,6 +81,7 @@ router.put("/db/:id", async (req, res) => {
   }
 });
 
+//db: delete an music and delete all associated music tags
 router.delete("/db/:id", async (res, req) => {
   try {
     const deleteOneMusic = await Music.destroy({

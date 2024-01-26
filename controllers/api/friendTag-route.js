@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
-//path :   /friendTag
+//path :  /friendTag
 
 // post route on friendTag when you click on following an user
 // user_id from currnet session

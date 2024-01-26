@@ -38,6 +38,10 @@ Music.belongsToMany(User, {
   foreignKey: "music_id",
 });
 
+Music.hasMany(MusicTag,{
+  foreignKey: "music_id",
+})
+
 module.exports = {
   User,
   FriendTag,
