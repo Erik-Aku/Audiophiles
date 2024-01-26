@@ -6,22 +6,6 @@ const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 // a music will be insert into music table
 // and a musicTag have user_id and music_id will be insert into music table
 
-// Todo: create a route for when click save a music to music list
-// this route is in musicRoute
-/*  
-router.post("/", async (res, req) => {
-  if (!req.session.logged_in) {
-    res.status(401).json("Please log in first!"); // 401 = Unauthorized error
-    console.log("the user is not logged in");
-    return;
-  }
-  req.body = {
-    user_id: req.session.user_id,
-  };
-  const newMusicTag = await MusicTag.create(req.body);
-});
-*/
-
 // when you want to delete a music from your music list
 router.delete("/", async (res, req) => {
   try {
