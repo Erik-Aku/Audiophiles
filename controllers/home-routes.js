@@ -1,9 +1,10 @@
 const router = require('express').Router();
+const withAuth = require('../utils/auth');
 
 
 // renders the home.handlebars page
 router.get('/', (req, res) => {
-  res.render('home');
+  res.render('home', {logged_in: req.session.logged_in});
 });
 
 
@@ -14,7 +15,7 @@ router.get('/login', (req, res) => {
       return;
     }
   
-    res.render('login');
+    res.render('login', {logged_in: req.session.logged_in});
   });
 
 
