@@ -11,12 +11,19 @@ router.get("/", async (req, res) => {
         { model: Music },
         {
           model: FriendTag,
-          attributes: ["friend_id"],
+          attributes: ["id", "friend_id", "user_id"],
+          as: "UserHasTag",
+        },
+        {
+          model: User,
+          as: "UserToUser",
+          include: [{ model: Music }],
         },
       ],
     });
+    console.log(userData);
     if (!userData) {
-      res.status(404).json("No product is found!");
+      res.status(404).json("No user is found!");
       return;
     }
     res.status(200).json(userData);
@@ -30,10 +37,22 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
-      include: [{ model: Music }],
+      include: [
+        { model: Music },
+        {
+          model: FriendTag,
+          attributes: ["id", "friend_id", "user_id"],
+          as: "UserHasTag",
+        },
+        {
+          model: User,
+          as: "UserToUser",
+          include: [{ model: Music }],
+        },
+      ],
     });
     if (!userData) {
-      res.status(404).json("No product is found!");
+      res.status(404).json("No user is found!");
       return;
     }
     res.status(200).json(userData);
@@ -50,8 +69,9 @@ router.get("/friendlist/:id", async (req, res) => {
     const userData = await User.findByPk(req.params.id, {
       include: [{ model: Music }, { model: FriendTag }],
     });
+
     if (!userData) {
-      res.status(404).json("No product is found!");
+      res.status(404).json("No user is found!");
       return;
     }
     res.status(200).json(userData);
@@ -73,31 +93,32 @@ mysql> select * from user where user.id = 2
 */
 
 // add one user
-// router.post("/", async (req, res) => {
-//   try {
-//     const userData = await User.create(
-//       {
-//         first_name: req.body.first_name,
-//         last_name: req.body.last_name,
-//         email: req.body.email,
-//         password: req.body.password,
-//       },
-//       {
-//         where: {
-//           id: req.params.id,
-//         },
-//       }
-//     );
 
-//     res.status(200).json(userData);
-//     console.log("Successfully added one user!");
-//   } catch (err) {
-//     res.status(500).json(err);
-//     console.log(err);
-//   }
-// });
+/*
+router.post("/", async (req, res) => {
+  try {
+    const userData = await User.create(
+      {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: req.body.password,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
 
-
+    res.status(200).json(userData);
+    console.log("Successfully added one user!");
+  } catch (err) {
+    res.status(500).json(err);
+    console.log(err);
+  }
+});
+*/
 
 //delete one user by its id
 router.delete("/:id", async (req, res) => {
@@ -109,7 +130,7 @@ router.delete("/:id", async (req, res) => {
     });
     if (!categoryData) {
       res.status(404).json({
-        message: "No category found with that id",
+        message: "No user found with that id",
       });
       console.log("successfully delete one user!");
       res.status(200).json(deleteOneUser);
