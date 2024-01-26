@@ -11,12 +11,19 @@ router.get("/", async (req, res) => {
         { model: Music },
         {
           model: FriendTag,
-          attributes: ["friend_id"],
+          attributes: ["id", "friend_id", "user_id"],
+          as: "UserHasTag",
+        },
+        {
+          model: User,
+          as: "UserToUser",
+          include: [{ model: Music }],
         },
       ],
     });
+    console.log(userData);
     if (!userData) {
-      res.status(404).json("No product is found!");
+      res.status(404).json("No user is found!");
       return;
     }
     res.status(200).json(userData);
@@ -30,10 +37,22 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
-      include: [{ model: Music }],
+      include: [
+        { model: Music },
+        {
+          model: FriendTag,
+          attributes: ["id", "friend_id", "user_id"],
+          as: "UserHasTag",
+        },
+        {
+          model: User,
+          as: "UserToUser",
+          include: [{ model: Music }],
+        },
+      ],
     });
     if (!userData) {
-      res.status(404).json("No product is found!");
+      res.status(404).json("No user is found!");
       return;
     }
     res.status(200).json(userData);
@@ -50,8 +69,9 @@ router.get("/friendlist/:id", async (req, res) => {
     const userData = await User.findByPk(req.params.id, {
       include: [{ model: Music }, { model: FriendTag }],
     });
+
     if (!userData) {
-      res.status(404).json("No product is found!");
+      res.status(404).json("No user is found!");
       return;
     }
     res.status(200).json(userData);
@@ -99,6 +119,7 @@ router.post("/", async (req, res) => {
   }
 });
 */
+
 //delete one user by its id
 router.delete("/:id", async (req, res) => {
   try {
@@ -109,7 +130,7 @@ router.delete("/:id", async (req, res) => {
     });
     if (!categoryData) {
       res.status(404).json({
-        message: "No category found with that id",
+        message: "No user found with that id",
       });
       console.log("successfully delete one user!");
       res.status(200).json(deleteOneUser);

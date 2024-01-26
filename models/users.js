@@ -37,7 +37,8 @@ User.init(
       allowNull: false,
       validate: {
         len: [8], // minimum length 8 characters
-        isAlphanumeric: true, // must contain only alphabetic characters and numbers
+        // removed constrains to allow any characters
+      //  isAlphanumeric: true, // must contain only alphabetic characters and numbers
       },
     },
   },
