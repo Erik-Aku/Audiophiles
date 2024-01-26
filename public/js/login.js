@@ -42,6 +42,7 @@ const loginFormHandler = async (event) => {
       if (response.ok) {
         console.log('It Worked')
         // Add code on line 56
+        document.location.replace('/');
       };
 
     }
