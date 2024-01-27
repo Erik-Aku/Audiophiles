@@ -15,7 +15,7 @@
              {{#if logged_in}}
             <a href="/profile"
               class="nav-link link-body-emphasis px-2"
-            >Logout</a> 
+            >Profile</a><button class="no-button nav-link link-body-emphasis px-2 nav-item" id="logout">Logout</button> 
             {{else}}
             <a href="/login"
             class="nav-link link-body-emphasis px-2"
@@ -26,5 +26,9 @@
       <div class="container d-flex flex-wrap p-3">
         <h1>Audiophiles nav-bar partial</h1>
       </div>
+
+        {{#if logged_in}}
+  <script src="../../public/js/logout.js"></script>
+  {{/if}}
     </nav>
 
