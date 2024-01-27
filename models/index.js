@@ -1,8 +1,8 @@
 // import models
 const User = require("./users.js");
-const FriendTag = require("./FriendTag");
-const MusicTag = require("./MusicTags");
-const Music = require("./Music");
+const FriendTag = require("./FriendTag.js");
+const MusicTag = require("./MusicTags.js");
+const Music = require("./Music.js");
 
 // user-to-user self-referencing many-to-many association
 User.hasMany(FriendTag, {

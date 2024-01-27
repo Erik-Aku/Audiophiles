@@ -4,10 +4,10 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers/index.js');
 const helpers = require('./utils/helpers');
-
-const sequelize = require('./config/connection');
+// const apiController = require('../public/js/apiController.js');
+const sequelize = require('./config/connection.js');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
+const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
