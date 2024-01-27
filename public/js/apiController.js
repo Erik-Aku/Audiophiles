@@ -1,38 +1,27 @@
-const axios = require('axios');
-//const server = require('server.js');
+
+const searchFormEl = document.querySelector('#test')
 
 const rapidApiKey = 'd234ba8234msh21b763e119aeb38p18fabdjsnd2b69705b260';
 const rapidApiHost = 'deezerdevs-deezer.p.rapidapi.com';
 
-async function searchDeezer(query) {
+const url = 'https://deezerdevs-deezer.p.rapidapi.com/search?q=eminem';
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'd234ba8234msh21b763e119aeb38p18fabdjsnd2b69705b260',
+		'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
+	}
+};
+
+async function fetchData() {
   try {
-    const searchOptions = {
-        method: 'GET',
-        url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
-        params: { q: query },
-        headers: {
-          'X-RapidAPI-Key': rapidApiKey,
-          'X-RapidAPI-Host': rapidApiHost,
-        }
-      };
-      fetch(searchOptions)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-
-      })
-      .then(data => {
-        searchOptions.textContent = JSON.stringify(data, null, 2);
-      })
-
+    const response = await fetch(url, options);
+    const result = await response.text();
+    console.log(result);
   } catch (error) {
     console.error(error);
-    return ();
   }
 }
 
-module.exports = {
-  searchDeezer
-};
+// Call the fetchData function
+fetchData();
