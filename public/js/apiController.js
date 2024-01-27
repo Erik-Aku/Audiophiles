@@ -1,10 +1,14 @@
 
-const searchFormEl = document.querySelector('#test')
+const querySubmit = document.querySelector('#querySubmitButton')
+const queryInput = document.querySelector('#queryInputField')
+let queryText
+let url
 
-const rapidApiKey = 'd234ba8234msh21b763e119aeb38p18fabdjsnd2b69705b260';
-const rapidApiHost = 'deezerdevs-deezer.p.rapidapi.com';
+queryInput.addEventListener('input', function() {
+  queryText = queryInput.value
+   url = `https://deezerdevs-deezer.p.rapidapi.com/search?q=${queryText}`;
+});
 
-const url = 'https://deezerdevs-deezer.p.rapidapi.com/search?q=eminem';
 const options = {
 	method: 'GET',
 	headers: {
@@ -16,12 +20,11 @@ const options = {
 async function fetchData() {
   try {
     const response = await fetch(url, options);
-    const result = await response.text();
-    console.log(result);
+    const result = await response.json();
+    console.log(result.data.map((song) => console.log(song.title)))
   } catch (error) {
     console.error(error);
   }
 }
 
-// Call the fetchData function
-fetchData();
+querySubmit.addEventListener('click', () => fetchData())
