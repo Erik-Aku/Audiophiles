@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
         {
           model: FriendTag,
           attributes: ["id", "friend_id", "user_id"],
-          as: "UserHasTag",
+          as: "UserHasFriendTag",
         },
         {
           model: User,
@@ -25,6 +25,7 @@ router.get("/", async (req, res) => {
       res.status(404).json("No user is found!");
       return;
     }
+
     res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
@@ -33,20 +34,20 @@ router.get("/", async (req, res) => {
 });
 
 // get one user by id and his/her music
-router.get("/:id", async (req, res) => {
+router.get("/currentUser", async (req, res) => {
   try {
     if (!req.session.logged_in) {
       res.status(401).json("Please log in first!"); // 401 = Unauthorized error
       console.log("the user is not logged in");
       return;
     }
-    const userData = await User.findByPk(req.session.user_id, {
+    const userData = await User.findOne(req.session.user_id, {
       include: [
         { model: Music },
         {
           model: FriendTag,
           attributes: ["id", "friend_id", "user_id"],
-          as: "UserHasTag",
+          as: "UserHasFriendTag",
         },
         {
           model: User,
@@ -59,7 +60,112 @@ router.get("/:id", async (req, res) => {
       res.status(404).json("No user is found!");
       return;
     }
-    res.status(200).json(userData);
+    
+    //deconstruct object for better use
+    //console.log("user data before deconstruct");
+    //console.log(UserData1);
+
+    let UserData1 = await userData.get({ plain: true });
+
+    UserData1= {
+      currentUser_id: userData.id,
+      currentUser_name: `${userData.first_name} ${userData.last_name}`,
+      currentUser_email: userData.email,
+      currentUser_hasMusic: userData.music.map(
+        (item) =>
+          (item.music = {
+            music_id: item.id,
+            artist_name: item.artist_name,
+            album_name: item.album_name,
+            album_image: item.album_image,
+          })
+      ),
+      currentUser_hasFriend: userData.UserToUser.map(
+        (item) =>
+          (item = {
+            friends_id: item.id,
+            name: `${item.first_name} ${item.last_name}`,
+            email: item.email,
+            music: item.music.map(
+              (item) =>
+                (item = {
+                  music_id: item.id,
+                  artist_name: item.artist_name,
+                  album_name: item.album_name,
+                  album_image: item.album_image,
+                })
+            ),
+          })
+      ),
+    };
+  
+    //console.log("user data after deconstruct");
+    //console.log(UserData1);
+    res.status(200).json(UserData1);
+  } catch (err) {
+    res.status(500).json(err);
+    console.log(err);
+  }
+});
+
+//db: get one user by id
+router.get("/db/:id", async (req, res) => {
+  try {
+    let userData = await User.findByPk(req.params.id, {
+      include: [
+        { model: Music },
+        {
+          model: FriendTag,
+          attributes: ["id", "friend_id", "user_id"],
+          as: "UserHasFriendTag",
+        },
+        {
+          model: User,
+          as: "UserToUser",
+          include: [{ model: Music }],
+        },
+      ],
+    });
+    if (!userData) {
+      res.status(404).json("No user is found!");
+      return;
+    }
+
+    let UserData1 = await userData.get({ plain: true });
+
+    UserData1= {
+      currentUser_id: userData.id,
+      currentUser_name: `${userData.first_name} ${userData.last_name}`,
+      currentUser_email: userData.email,
+      currentUser_hasMusic: userData.music.map(
+        (item) =>
+          (item.music = {
+            music_id: item.id,
+            artist_name: item.artist_name,
+            album_name: item.album_name,
+            album_image: item.album_image,
+          })
+      ),
+      currentUser_hasFriend: userData.UserToUser.map(
+        (item) =>
+          (item = {
+            friends_id: item.id,
+            name: `${item.first_name} ${item.last_name}`,
+            email: item.email,
+            music: item.music.map(
+              (item) =>
+                (item = {
+                  music_id: item.id,
+                  artist_name: item.artist_name,
+                  album_name: item.album_name,
+                  album_image: item.album_image,
+                })
+            ),
+          })
+      ),
+    };
+ 
+    res.status(200).json(UserData1);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
@@ -186,6 +292,5 @@ router.delete("/db/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 module.exports = router;

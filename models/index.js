@@ -6,7 +6,7 @@ const Music = require("./Music");
 
 // user-to-user self-referencing many-to-many association
 User.hasMany(FriendTag, {
-  as:"UserHasTag",
+  as:"UserHasFriendTag",
   foreignKey: "friend_id",
 });
 

@@ -72,7 +72,7 @@ router.put("/db/:id", async (req, res) => {
       }
     );
     if (!updatedMusicData) {
-      res.status(404).json("No category with that id is found");
+      res.status(404).json("No Music with that id is found");
       return;
     }
     res.status(200).json(updatedMusicData);
