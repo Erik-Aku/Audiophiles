@@ -21,7 +21,8 @@ async function fetchData() {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result.data.map((song) => console.log(song.title)))
+    // console.log(result.data.map((song) => console.log(song.title)))
+    console.log(result.data)
   } catch (error) {
     console.error(error);
   }
