@@ -7,7 +7,7 @@ const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 // and a musicTag have user_id and music_id will be insert into music table
 
 // when you want to delete a music from your music list
-router.delete("/", async (res, req) => {
+router.delete("/", async (req, res) => {
   try {
     if (!req.session.logged_in) {
       res.status(401).json("Please log in first!"); // 401 = Unauthorized error
@@ -31,7 +31,7 @@ router.delete("/", async (res, req) => {
 });
 
 // database, delete one by its id.
-router.delete("/db/:id", async (res, req) => {
+router.delete("/db/:id", async (req, res) => {
   try {
     const deleteOneMusicTagbyID = await MusicTag.destroy({
       where: {

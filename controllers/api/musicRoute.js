@@ -3,7 +3,7 @@ const { User, Music, FriendTag, MusicTag } = require("../../models/index.js");
 //path /music
 
 // Insert a music into music table for when click save a music to your music list
-router.post("/", async (res, req) => {
+router.post("/", async (req, res) => {
   try {
     if (!req.session.logged_in) {
       res.status(401).json("Please log in first!"); // 401 = Unauthorized error
@@ -15,6 +15,7 @@ router.post("/", async (res, req) => {
       artist_name: req.body.artist_name,
       album_name: req.body.album_name,
       album_image: req.body.album_image,
+      song_name: req.body.song_name,
     });
   //  res.status(200).json(addOneMusic);
 
@@ -29,7 +30,7 @@ router.post("/", async (res, req) => {
 });
 
 //get all music s
-router.get("/db", async (res, req) => {
+router.get("/db", async (req, res) => {
   try {
     const musicData = Music.findAll();
     if (!musicData) {
@@ -43,7 +44,7 @@ router.get("/db", async (res, req) => {
 });
 
 //get one by its id
-router.get("/db/:id", async (res, req) => {
+router.get("/db/:id", async (req, res) => {
   try {
     const musicData = Music.findByPk(req.param.id);
     if (!musicData) {
@@ -64,6 +65,7 @@ router.put("/db/:id", async (req, res) => {
         artist_name: req.body.category_name,
         album_name: req.body.album_name,
         album_image: req.body.album_image,
+        song_name: req.body.song_name,
       },
       {
         where: {
@@ -82,7 +84,7 @@ router.put("/db/:id", async (req, res) => {
 });
 
 //db: delete an music and delete all associated music tags
-router.delete("/db/:id", async (res, req) => {
+router.delete("/db/:id", async (req, res) => {
   try {
     const deleteOneMusic = await Music.destroy({
       where: {
