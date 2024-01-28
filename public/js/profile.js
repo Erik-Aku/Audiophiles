@@ -36,7 +36,12 @@ currentUser_hasFriend: {
 }
 */
 
-// check for array.length for condition
+// check for array.length for condition 
+  if (userMusicData.length !== 0){
+  }
+
+  if(userFriendData.length !== 0){
+  }
   } catch (error) {
     console.log(error);
   }
