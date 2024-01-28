@@ -42,7 +42,7 @@ const songData = (data) => {
     
     
     const artistCard = document.createElement('div');
-    artistCard.classList.add("card", "col-md-4", "mx-2");
+    artistCard.classList.add("card", "col-md-4", "mx-2", "mt-3");
     artistCard.setAttribute('style', "width: 18rem;")
 
     const cardBody = document.createElement('div');
