@@ -41,7 +41,7 @@ router.get("/currentUser", async (req, res) => {
       console.log("the user is not logged in");
       return;
     }
-    const userData = await User.findOne(req.session.user_id, {
+    const userData = await User.findByPk(req.session.user_id, {
       include: [
         { model: Music },
         {
