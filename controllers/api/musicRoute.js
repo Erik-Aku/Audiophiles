@@ -16,7 +16,7 @@ router.post("/", async (res, req) => {
       album_name: req.body.album_name,
       album_image: req.body.album_image,
     });
-    res.status(200).json(addOneMusic);
+  //  res.status(200).json(addOneMusic);
 
     const addOneMusicTag = await MusicTag.create({
       user_id: req.session.user_id,
