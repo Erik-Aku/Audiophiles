@@ -32,6 +32,8 @@ async function fetchData() {
 const cardContainerEl = document.querySelector('#music-container');
 
 const songData = (data) => {
+  cardContainerEl.innerHTML = '';
+
   for (let i = 0; i < data.length; i++) {
     let currentObj = data[i];
     let songName = currentObj.title;
@@ -40,7 +42,7 @@ const songData = (data) => {
     
     
     const artistCard = document.createElement('div');
-    artistCard.classList.add("card")
+    artistCard.classList.add("card", "col-md-4", "mx-2");
     artistCard.setAttribute('style', "width: 18rem;")
 
     const cardBody = document.createElement('div');
@@ -59,6 +61,7 @@ const songData = (data) => {
    song.textContent = songName;
 
    const cardLikeBtn = document.createElement('a');
+   cardLikeBtn.classList.add('btn', 'btn-primary');
    cardLikeBtn.setAttribute('href', "#");
    cardLikeBtn.textContent = "Like";
 
