@@ -6,35 +6,26 @@
               class="nav-link link-body-emphasis px-1 active"
               aria-current="page"
             >Home</a></li>
-          <li class="nav-item"><a
-              href="#"
-              class="nav-link link-body-emphasis px-2"
-            >Dashboard</a></li>
          <li class="nav-item">
             {{!-- If user is logged in, route to /profile page and display href to logged out, if user is not logged in, display login text and route to login page --}}
              {{#if logged_in}}
             <a href="/profile"
               class="nav-link link-body-emphasis px-2"
-            >Logout</a></li> 
+            >Profile</a><li class="nav-item"><button class="no-button nav-link link-body-emphasis px-2 nav-item" id="logout">Logout</button></li> 
             {{else}}
             <a href="/login"
             class="nav-link link-body-emphasis px-2"
-            >login</a>
+            >login</a></li>
             {{/if}}
-        </ul>
+          </ul>  
       </div>
       <div class="container d-flex flex-wrap p-3">
-        <h1>Audiophiles nav-bar partial</h1>
+        <h4>Audiophiles</h4>
+        
       </div>
+
+        {{#if logged_in}}
+  <script src="../../public/js/logout.js"></script>
+  {{/if}}
     </nav>
 
-
-
-
-
-        {{!-- {{#if logged_in}}
-        <a href="/profile">profile</a> |
-        <button class="no-button" id="logout">logout</button>
-        {{else}}
-        <a href="/login">login</a>
-        {{/if}} --}}

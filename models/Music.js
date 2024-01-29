@@ -24,6 +24,14 @@ Music.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    song_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    music_link: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   },
   {
     sequelize,
