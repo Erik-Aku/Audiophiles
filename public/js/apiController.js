@@ -53,7 +53,7 @@ const songData = (data) => {
     artistCard.setAttribute("style", "width: 18rem;");
 
     const cardBody = document.createElement("div");
-    cardBody.classList.add("card-bodies");
+    cardBody.classList.add("card-body");
 
     const cardTitle = document.createElement("h5");
     cardTitle.classList.add("card-title");
