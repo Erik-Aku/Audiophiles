@@ -68,7 +68,7 @@ const songData = (data) => {
     song.textContent = songName;
 
     const cardLikeBtn = document.createElement("a");
-    cardLikeBtn.classList.add("like-button");
+    cardLikeBtn.classList.add("like-button", "btn", "btn-primary");
     cardLikeBtn.setAttribute("href", "#");
     cardLikeBtn.setAttribute("data-music", i);
     cardLikeBtn.textContent = "Like";
