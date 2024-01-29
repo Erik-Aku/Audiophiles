@@ -82,6 +82,19 @@ const fetchProfileData = async function () {
           followMusicArtist.textContent = `Artist Name: ${userfollowData.music.artist_name}`
           followMusicAlbumName.textContent = `Album Name: ${userfollowData.music.album_name}`;
           followMusicSongName.textContent = `Song Name: ${userfollowData.music.song_name}`
+
+
+
+          followMusicContainer.appendChild(followMusicID);
+          followMusicContainer.appendChild(followMusicArtist);
+          followMusicContainer.appendChild(followMusicAlbumName);
+          followMusicContainer.appendChild(followMusicSongName);
+
+          followInfoContainer.appendChild(followName);
+          followInfoContainer.appendChild(followEmail);
+          followInfoContainer.appendChild(followMusicContainer);
+        
+          userFollowinglist.appendChild(followInfoContainer);
         }
       }
     }
