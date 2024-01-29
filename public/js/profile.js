@@ -24,13 +24,11 @@ const fetchProfileData = async function () {
 
     if (getUserProfile.ok) {
       const userData = await getUserProfile.json();
+      console.log("user data: ")
       console.log(userData);
 
-      //const profileContainer = document.createElement("span");
       const userName = document.createElement("span");
       const userEmail = document.createElement("span");
-      const userMusic = document.createElement("ul");
-      const userFriend = document.createElement("ul");
 
       userName.textContent = " " + userData.currentUser_name;
       userEmail.textContent = " " + userData.currentUser_email;
@@ -39,16 +37,52 @@ const fetchProfileData = async function () {
       classUserEmail.appendChild(userEmail);
 
       const userMusicData = userData.currentUser_hasMusic;
-      const userFriendData = userData.currnetUser_hasFriend;
+
+      const userfollowData = userData.currnetUser_hasFriend;
       // check for array.length for condition
       if (userMusicData !== undefined && userMusicData !== null) {
         for (i = 0; i < userMusicData.length; i++) {
-          const music = user
+          const MusicContainer = document.createElement("div");
+          const artistName = document.createElement("div");
+          const albumName = document.createElement("div");
+          const albumImage = document.createElement("img");
+          const songName = document.createElement("div");
+
+
+          artistName.textContent = userMusicData[i].artist_name;
+          albumName.textContent = userMusicData[i].album_name;
+          albumImage.setAttribute("src", userMusicData[i].album_image);
+          songName.textContent = userMusicData[i].song_name;
+
+
+          MusicContainer.appendChild(artistName);
+          MusicContainer.appendChild(albumName);
+          MusicContainer.appendChild(albumImage);
+          MusicContainer.appendChild(songName);
+
+          classUserMusiclist.appendChild(MusicContainer);
         }
       }
 
-      if (userFriendData !== undefined && userMusicData !== null) {
-        for (i = 0; i < userFriendData.length; i++) {}
+      if (userfollowData !== undefined && userfollowData !== null) {
+        for (i = 0; i < userFriendData.length; i++) {
+          const followInfoContainer =  document.createElement("div");
+          const followName = document.createElement("div");
+          const followEmail = document.createElement("div");
+
+          const followMusicContainer = document.createElement("div");
+          const followMusicID = document.createElement("div");
+          const followMusicArtist = document.createElement("div");
+          const followMusicAlbumName = document.createElement("div");
+          const followMusicSongName = document.createElement("div");
+
+          followName.textContent = `Name: ${userfollowData.name}`;
+          followEmail.textContent = `Email: ${userFollowinglist.email}`;
+          followMusicID.textContent = `${i}`
+          followMusicArtist.textContent = `Artist Name: ${userfollowData.music.artist_name}`
+          followMusicAlbumName.textContent = `Album Name: ${userfollowData.music.album_name}`;
+          followMusicSongName.textContent = `Song Name: ${userfollowData.music.song_name}`
+        }
       }
     }
   } catch (error) {
@@ -58,18 +92,18 @@ const fetchProfileData = async function () {
 
 fetchProfileData();
 
-// an array of objects
-/* 
- music= {
-        music_id: item.id,
-        artist_name: item.artist_name,
-        album_name: item.album_name,
-        album_image: item.album_image,
-        } 
-currentUser_hasFriend: {
-        friends_id: item.id,
-        name: `${item.first_name} ${item.last_name}`,
-        email: item.email,
-        music: item.music.map() 
+async function searchFriendhandler (event) {
+  event.preventDeafault();
+  const getAllUserData = await fetch (`/api/users/findUsers`,{
+    method:"GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  getAllUserData
+  // pop the current user from array
+
+  
+
+  })
 }
-*/
+

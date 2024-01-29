@@ -33,6 +33,38 @@ router.get("/", async (req, res) => {
   }
 });
 
+// route for the button to find all user on the field
+router.get("/findUsers ", async (req, res) => {
+  try {
+    const userData = await User.findAll({
+      include: [
+        { model: Music },
+        {
+          model: FriendTag,
+          attributes: ["id", "friend_id", "user_id"],
+          as: "UserHasFriendTag",
+        },
+        {
+          model: User,
+          as: "UserToUser",
+          include: [{ model: Music }],
+        },
+      ],
+    });
+    console.log(userData);
+    if (!userData) {
+      res.status(404).json("No user is found!");
+      return;
+    }
+    const cleanData = userData.map((item)=> item.get({plain:true}));
+
+    res.status(200).json(cleanData);
+  } catch (err) {
+    res.status(500).json(err);
+    console.log(err);
+  }
+});
+
 // get one user by id and his/her music
 router.get("/currentUser", async (req, res) => {
   try {
@@ -78,6 +110,7 @@ router.get("/currentUser", async (req, res) => {
             artist_name: item.artist_name,
             album_name: item.album_name,
             album_image: item.album_image,
+            song_name: item.song_name,
           })
       ),
       currentUser_hasFriend: userData.UserToUser.map(
@@ -93,6 +126,7 @@ router.get("/currentUser", async (req, res) => {
                   artist_name: item.artist_name,
                   album_name: item.album_name,
                   album_image: item.album_image,
+                  song_name: item.song_name,
                 })
             ),
           })
@@ -144,6 +178,7 @@ router.get("/db/:id", async (req, res) => {
             artist_name: item.artist_name,
             album_name: item.album_name,
             album_image: item.album_image,
+            song_name: item.song_name,
           })
       ),
       currentUser_hasFriend: userData.UserToUser.map(
@@ -159,6 +194,7 @@ router.get("/db/:id", async (req, res) => {
                   artist_name: item.artist_name,
                   album_name: item.album_name,
                   album_image: item.album_image,
+                  song_name: item.song_name,
                 })
             ),
           })
