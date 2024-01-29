@@ -49,7 +49,7 @@ const songData = (data) => {
     };
 
     const artistCard = document.createElement("div");
-    artistCard.classList.add("card, col-md-4", "mx-2", "mt-3");
+    artistCard.classList.add("card", "col-md-4", "mx-2", "mt-3");
     artistCard.setAttribute("style", "width: 18rem;");
 
     const cardBody = document.createElement("div");
@@ -68,7 +68,7 @@ const songData = (data) => {
     song.textContent = songName;
 
     const cardLikeBtn = document.createElement("a");
-    cardLikeBtn.classList.add("like-button");
+    cardLikeBtn.classList.add("like-button", "btn", "btn-primary");
     cardLikeBtn.setAttribute("href", "#");
     cardLikeBtn.setAttribute("data-music", i);
     cardLikeBtn.textContent = "Like";
