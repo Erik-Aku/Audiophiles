@@ -32,11 +32,14 @@ async function fetchData() {
 const cardContainerEl = document.querySelector("#music-container");
 
 const songData = (data) => {
+  cardContainerEl.innerHTML = '';
+
   for (let i = 0; i < data.length; i++) {
     let currentObj = data[i];
     let songName = currentObj.title;
     let artistName = currentObj.artist.name;
     let albumCover = currentObj.album.cover_medium;
+
     let albumName = currentObj.album.title;
     let requestBody = {
       artist_name: artistName,
@@ -46,7 +49,7 @@ const songData = (data) => {
     };
 
     const artistCard = document.createElement("div");
-    artistCard.classList.add("card");
+    artistCard.classList.add("card", "col-md-4", "mx-2", "mt-3");
     artistCard.setAttribute("style", "width: 18rem;");
 
     const cardBody = document.createElement("div");
@@ -65,7 +68,7 @@ const songData = (data) => {
     song.textContent = songName;
 
     const cardLikeBtn = document.createElement("a");
-    cardLikeBtn.classList.add("like-button");
+    cardLikeBtn.classList.add("like-button", "btn", "btn-primary");
     cardLikeBtn.setAttribute("href", "#");
     cardLikeBtn.setAttribute("data-music", i);
     cardLikeBtn.textContent = "Like";
@@ -112,6 +115,3 @@ const likeButtonHandler = async (id) => {
 
 querySubmit.addEventListener("click", () => fetchData());
 
-// click on like button and save the music data in array
-// add event listener to call a function that fetches the api route
-// with the post request and sends the music data along with that request
