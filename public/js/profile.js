@@ -55,10 +55,15 @@ const fetchProfileData = async function () {
           const cardTitle = document.createElement("h5");
           cardTitle.classList.add("card-title");
           cardTitle.textContent = userMusicData[i].artist_name;
+          
+          const cardImageLink = document.createElement("a");
+          cardImageLink.setAttribute("target", "_blank");
+          cardImageLink.setAttribute("href", userMusicData[i].music_link);
 
           const cardImage = document.createElement("img");
           cardImage.classList.add("card-img-top");
           cardImage.setAttribute("src", userMusicData[i].album_image);
+          
 
           const song = document.createElement("p");
           song.classList.add("card-text");
@@ -69,10 +74,12 @@ const fetchProfileData = async function () {
           albumName.classList.add("card-text");
           albumName.textContent = (`Album Name: ${userMusicData[i].album_name}`);
           
+          cardImageLink.appendChild(cardImage);
+
           cardBody.appendChild(cardTitle);
           cardBody.appendChild(song);
           cardBody.appendChild(albumName);
-          cardBody.appendChild(cardImage);
+          cardBody.appendChild(cardImageLink);
           artistCard.appendChild(cardBody);
           MusicContainer.appendChild(artistCard);
 
@@ -99,7 +106,6 @@ const fetchProfileData = async function () {
           followMusicArtist.textContent = `Artist Name: ${userfollowData.music.artist_name}`
           followMusicAlbumName.textContent = `Album Name: ${userfollowData.music.album_name}`;
           followMusicSongName.textContent = `Song Name: ${userfollowData.music.song_name}`
-
 
           followMusicContainer.appendChild(followMusicID);
           followMusicContainer.appendChild(followMusicArtist);

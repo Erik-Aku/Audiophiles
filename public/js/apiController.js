@@ -39,6 +39,7 @@ const songData = (data) => {
     let songName = currentObj.title;
     let artistName = currentObj.artist.name;
     let albumCover = currentObj.album.cover_medium;
+    let musicLink = currentObj.link;
 
     let albumName = currentObj.album.title;
     let requestBody = {
@@ -46,6 +47,7 @@ const songData = (data) => {
       album_name: albumName,
       album_image: albumCover,
       song_name: songName,
+      music_link: musicLink
     };
 
     const artistCard = document.createElement("div");
@@ -58,6 +60,10 @@ const songData = (data) => {
     const cardTitle = document.createElement("h5");
     cardTitle.classList.add("card-title");
     cardTitle.textContent = artistName;
+
+    const cardImageLink = document.createElement("a");
+    cardImageLink.setAttribute("href",musicLink) 
+    cardImageLink.setAttribute("target","_blank");
 
     const cardImage = document.createElement("img");
     cardImage.classList.add("card-img-top");
@@ -75,11 +81,13 @@ const songData = (data) => {
     cardLikeBtn.addEventListener("click", function () {
       likeButtonHandler(cardLikeBtn.dataset.music);
     });
+   
+    cardImageLink.appendChild(cardImage);
 
     cardBody.appendChild(song);
     cardBody.appendChild(cardTitle);
     cardBody.appendChild(song);
-    cardBody.appendChild(cardImage);
+    cardBody.appendChild(cardImageLink);
     cardBody.appendChild(cardLikeBtn);
     artistCard.appendChild(cardBody);
     cardContainerEl.appendChild(artistCard);
@@ -95,12 +103,13 @@ const likeButtonHandler = async (id) => {
   const album_name = obj.album_name;
   const album_image = obj.album_image;
   const song_name = obj.song_name;
+  const music_link = obj.music_link;
 
   if (obj) {
     // Send a POST request to the API endpoint
     const response = await fetch("/api/music", {
       method: "POST",
-      body: JSON.stringify({ artist_name, album_name, album_image, song_name }),
+      body: JSON.stringify({ artist_name, album_name, album_image, song_name, music_link }),
       headers: { "Content-Type": "application/json" },
     });
 

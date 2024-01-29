@@ -110,6 +110,7 @@ router.get("/currentUser", async (req, res) => {
             album_name: item.album_name,
             album_image: item.album_image,
             song_name: item.song_name,
+            music_link: item.music_link,
           })
       ),
       currentUser_hasFriend: userData.UserToUser.map(
@@ -126,6 +127,7 @@ router.get("/currentUser", async (req, res) => {
                   album_name: item.album_name,
                   album_image: item.album_image,
                   song_name: item.song_name,
+                  music_link: item.music_link,
                 })
             ),
           })
@@ -178,6 +180,7 @@ router.get("/db/:id", async (req, res) => {
             album_name: item.album_name,
             album_image: item.album_image,
             song_name: item.song_name,
+            music_link: item.music_link,
           })
       ),
       currentUser_hasFriend: userData.UserToUser.map(
@@ -194,6 +197,7 @@ router.get("/db/:id", async (req, res) => {
                   album_name: item.album_name,
                   album_image: item.album_image,
                   song_name: item.song_name,
+                  music_link: item.music_link,
                 })
             ),
           })

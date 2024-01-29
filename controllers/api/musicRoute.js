@@ -16,6 +16,7 @@ router.post("/", async (req, res) => {
       album_name: req.body.album_name,
       album_image: req.body.album_image,
       song_name: req.body.song_name,
+      music_link: req.body.music_link,
     });
   //  res.status(200).json(addOneMusic);
 
