@@ -37,26 +37,25 @@ router.get("/", async (req, res) => {
 router.get("/findUsers ", async (req, res) => {
   try {
     const userData = await User.findAll({
-      include: [
-        { model: Music },
-        {
-          model: FriendTag,
-          attributes: ["id", "friend_id", "user_id"],
-          as: "UserHasFriendTag",
-        },
-        {
-          model: User,
-          as: "UserToUser",
-          include: [{ model: Music }],
-        },
-      ],
+      attributes: ["id", "first_name", "last_name"],
     });
-    console.log(userData);
+
     if (!userData) {
       res.status(404).json("No user is found!");
       return;
     }
-    const cleanData = userData.map((item)=> item.get({plain:true}));
+    const cleanData = userData.map((item) => item.get({ plain: true }));
+    
+    console.log(cleanData);
+    
+    cleanData = {
+      id,
+      name: `${first_name} ${last_name}`
+    }
+
+    cleanData.filter((item) => item.id !== req.session.user_id);
+
+    console.log(cleanData);
 
     res.status(200).json(cleanData);
   } catch (err) {
@@ -92,14 +91,14 @@ router.get("/currentUser", async (req, res) => {
       res.status(404).json("No user is found!");
       return;
     }
-    
+
     //deconstruct object for better use
     //console.log("user data before deconstruct");
     //console.log(UserData1);
 
     let UserData1 = await userData.get({ plain: true });
 
-    UserData1= {
+    UserData1 = {
       currentUser_id: userData.id,
       currentUser_name: `${userData.first_name} ${userData.last_name}`,
       currentUser_email: userData.email,
@@ -132,7 +131,7 @@ router.get("/currentUser", async (req, res) => {
           })
       ),
     };
-  
+
     //console.log("user data after deconstruct");
     //console.log(UserData1);
     res.status(200).json(UserData1);
@@ -167,7 +166,7 @@ router.get("/db/:id", async (req, res) => {
 
     let UserData1 = await userData.get({ plain: true });
 
-    UserData1= {
+    UserData1 = {
       currentUser_id: userData.id,
       currentUser_name: `${userData.first_name} ${userData.last_name}`,
       currentUser_email: userData.email,
@@ -200,7 +199,7 @@ router.get("/db/:id", async (req, res) => {
           })
       ),
     };
- 
+
     res.status(200).json(UserData1);
   } catch (err) {
     res.status(500).json(err);
@@ -261,7 +260,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post('/logout', (req, res) => {
+router.post("/logout", (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
       res.status(204).end();
