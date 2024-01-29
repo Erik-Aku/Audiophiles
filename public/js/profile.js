@@ -32,6 +32,7 @@ const fetchProfileData = async function () {
 
       userName.textContent = " " + userData.currentUser_name;
       userEmail.textContent = " " + userData.currentUser_email;
+      
 
       classUserName.appendChild(userName);
       classUserEmail.appendChild(userEmail);
