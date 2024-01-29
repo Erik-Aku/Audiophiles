@@ -33,7 +33,7 @@ const cardContainerEl = document.querySelector("#music-container");
 
 const songData = (data) => {
   cardContainerEl.innerHTML = '';
-  likeArry =[]; // clear this intermediate array every time you click on the search button
+  likeArry = [];
 
   for (let i = 0; i < data.length; i++) {
     let currentObj = data[i];
