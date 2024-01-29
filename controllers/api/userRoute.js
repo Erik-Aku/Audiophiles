@@ -34,30 +34,33 @@ router.get("/", async (req, res) => {
 });
 
 // route for the button to find all user on the field
-router.get("/findUsers ", async (req, res) => {
+router.get("/findall", async (req, res) => {
+  if (!req.session.logged_in) {
+    res.status(401).json("Please log in first!"); // 401 = Unauthorized error
+    console.log("the user is not logged in");
+    return;
+  }
   try {
-    const userData = await User.findAll({
-      attributes: ["id", "first_name", "last_name"],
-    });
+    const userData = await User.findAll();
 
     if (!userData) {
       res.status(404).json("No user is found!");
       return;
     }
-    const cleanData = userData.map((item) => item.get({ plain: true }));
-    
-    console.log(cleanData);
-    
-    cleanData = {
-      id,
-      name: `${first_name} ${last_name}`
-    }
 
-    cleanData.filter((item) => item.id !== req.session.user_id);
+    let cleanData = userData.map((item) => item.get({ plain: true }));
 
-    console.log(cleanData);
+   const cleanData1 = cleanData.map(
+      (item) =>
+        (item = {
+          id: item.id,
+          name: `${item.first_name} ${item.last_name}`,
+        })
+    ).filter((item) => item.id !== req.session.user_id);
 
-    res.status(200).json(cleanData);
+    cleanData1.filter((item) => item.id !== req.session.user_id);
+
+    res.status(200).json(cleanData1);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
