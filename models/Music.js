@@ -28,6 +28,10 @@ Music.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    music_link: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   },
   {
     sequelize,

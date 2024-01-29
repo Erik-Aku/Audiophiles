@@ -55,10 +55,15 @@ const fetchProfileData = async function () {
           const cardTitle = document.createElement("h5");
           cardTitle.classList.add("card-title");
           cardTitle.textContent = userMusicData[i].artist_name;
+          
+          const cardImageLink = document.createElement("a");
+          cardImageLink.setAttribute("target", "_blank");
+          cardImageLink.setAttribute("href", userMusicData[i].music_link);
 
           const cardImage = document.createElement("img");
           cardImage.classList.add("card-img-top");
           cardImage.setAttribute("src", userMusicData[i].album_image);
+          
 
           const song = document.createElement("p");
           song.classList.add("card-text");
@@ -69,10 +74,12 @@ const fetchProfileData = async function () {
           albumName.classList.add("card-text");
           albumName.textContent = (`Album Name: ${userMusicData[i].album_name}`);
           
+          cardImageLink.appendChild(cardImage);
+
           cardBody.appendChild(cardTitle);
           cardBody.appendChild(song);
           cardBody.appendChild(albumName);
-          cardBody.appendChild(cardImage);
+          cardBody.appendChild(cardImageLink);
           artistCard.appendChild(cardBody);
           MusicContainer.appendChild(artistCard);
 
@@ -92,12 +99,24 @@ const fetchProfileData = async function () {
           const followMusicAlbumName = document.createElement("div");
           const followMusicSongName = document.createElement("div");
 
+
           followName.textContent = `Name: ${userfollowData.name}`;
           followEmail.textContent = `Email: ${userFollowinglist.email}`;
           followMusicID.textContent = `${i}`
           followMusicArtist.textContent = `Artist Name: ${userfollowData.music.artist_name}`
           followMusicAlbumName.textContent = `Album Name: ${userfollowData.music.album_name}`;
           followMusicSongName.textContent = `Song Name: ${userfollowData.music.song_name}`
+
+          followMusicContainer.appendChild(followMusicID);
+          followMusicContainer.appendChild(followMusicArtist);
+          followMusicContainer.appendChild(followMusicAlbumName);
+          followMusicContainer.appendChild(followMusicSongName);
+
+          followInfoContainer.appendChild(followName);
+          followInfoContainer.appendChild(followEmail);
+          followInfoContainer.appendChild(followMusicContainer);
+        
+          userFollowinglist.appendChild(followInfoContainer);
         }
       }
     }
@@ -110,16 +129,33 @@ fetchProfileData();
 
 async function searchFriendhandler (event) {
   event.preventDeafault();
+
   const getAllUserData = await fetch (`/api/users/findUsers`,{
     method:"GET",
     headers: {
       "Content-Type": "application/json",
     },
-  getAllUserData
-  // pop the current user from array
-
+})
   
-
-  })
+function RandomIndex(arrayLength) {
+  // Create an array of all possible indices
+  const indices = Array.from({ length: arrayLength }, (_, i) => i);
+  
+  // Shuffle the array using the Fisher-Yates shuffle algorithm
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  // Select and remove the first index from the shuffled array
+  const randomIndex = indices.shift();
+  return randomIndex;
 }
+
+// Example usage
+const array = [10, 20, 30, 40, 50];
+const randomIndex = getRandomNonRepeatingIndex(array.length);
+console.log(randomIndex);
+}
+
+
 
