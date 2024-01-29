@@ -33,6 +33,7 @@ const cardContainerEl = document.querySelector("#music-container");
 
 const songData = (data) => {
   cardContainerEl.innerHTML = '';
+  likeArry = [];
 
   for (let i = 0; i < data.length; i++) {
     let currentObj = data[i];
