@@ -39,26 +39,41 @@ const fetchProfileData = async function () {
       const userMusicData = userData.currentUser_hasMusic;
 
       const userfollowData = userData.currnetUser_hasFriend;
+
+      const MusicContainer = document.querySelector("#music-container")
       // check for array.length for condition
       if (userMusicData !== undefined && userMusicData !== null) {
         for (i = 0; i < userMusicData.length; i++) {
-          const MusicContainer = document.createElement("div");
-          const artistName = document.createElement("div");
-          const albumName = document.createElement("div");
-          const albumImage = document.createElement("img");
-          const songName = document.createElement("div");
+          const artistCard = document.createElement("div");
+          artistCard.classList.add("card", "col-md-4", "mx-2", "mt-3");
+          artistCard.setAttribute("style", "width: 18rem;");
 
+          const cardBody = document.createElement("div");
+          cardBody.classList.add("card-body");
 
-          artistName.textContent = userMusicData[i].artist_name;
-          albumName.textContent = userMusicData[i].album_name;
-          albumImage.setAttribute("src", userMusicData[i].album_image);
-          songName.textContent = userMusicData[i].song_name;
+          const cardTitle = document.createElement("h5");
+          cardTitle.classList.add("card-title");
+          cardTitle.textContent = userMusicData[i].artist_name;
 
+          const cardImage = document.createElement("img");
+          cardImage.classList.add("card-img-top");
+          cardImage.setAttribute("src", userMusicData[i].album_image);
 
-          MusicContainer.appendChild(artistName);
-          MusicContainer.appendChild(albumName);
-          MusicContainer.appendChild(albumImage);
-          MusicContainer.appendChild(songName);
+          const song = document.createElement("p");
+          song.classList.add("card-text");
+          song.setAttribute('style', 'margin-bottom: 0px;')
+          song.textContent = userMusicData[i].song_name;
+
+          const albumName = document.createElement("p");
+          albumName.classList.add("card-text");
+          albumName.textContent = (`Album Name: ${userMusicData[i].album_name}`);
+          
+          cardBody.appendChild(cardTitle);
+          cardBody.appendChild(song);
+          cardBody.appendChild(albumName);
+          cardBody.appendChild(cardImage);
+          artistCard.appendChild(cardBody);
+          MusicContainer.appendChild(artistCard);
 
           classUserMusiclist.appendChild(MusicContainer);
         }
