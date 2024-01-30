@@ -2,8 +2,11 @@
 This is a collaborative effort brought to you by Erik, Stevie, Yilun, and Alan. You can find them on Github Here:
 
 Erik: https://github.com/Erik-Aku
+
 Stevie: https://github.com/steviesummers
+
 Yilun: https://github.com/ylf456
+
 Alan: https://github.com/Aslan-The-Lion
 
 ## Description
