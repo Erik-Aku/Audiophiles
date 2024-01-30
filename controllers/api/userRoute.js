@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    console.log(userData);
+  //  console.log(userData);
     if (!userData) {
       res.status(404).json("No user is found!");
       return;
@@ -58,7 +58,7 @@ router.get("/findall", async (req, res) => {
         })
     ).filter((item) => item.id !== req.session.user_id);
 
-    cleanData1.filter((item) => item.id !== req.session.user_id);
+  //  cleanData1.filter((item) => item.id !== req.session.user_id);
 
     res.status(200).json(cleanData1);
   } catch (err) {

@@ -24,8 +24,8 @@ const fetchProfileData = async function () {
 
     if (getUserProfile.ok) {
       const userData = await getUserProfile.json();
-      console.log("user data: ");
-      console.log(userData);
+      //console.log("user data: ");
+      //console.log(userData);
 
       const userName = document.createElement("span");
       const userEmail = document.createElement("span");
