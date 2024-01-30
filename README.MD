@@ -2,8 +2,11 @@
 This is a collaborative effort brought to you by Erik, Stevie, Yilun, and Alan. You can find them on Github Here:
 
 Erik: https://github.com/Erik-Aku
+
 Stevie: https://github.com/steviesummers
+
 Yilun: https://github.com/ylf456
+
 Alan: https://github.com/Aslan-The-Lion
 
 ## Description
@@ -15,6 +18,7 @@ as a user i want to be able to log in and search up albums and songs of artist t
 ## Link to this application
 
 deployed website:  https://mighty-spire-51902-9cbcd11d8451.herokuapp.com/
+
 Audiophiles repo: https://github.com/Erik-Aku/Audiophiles
 
 ## Screenshots
