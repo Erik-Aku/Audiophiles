@@ -1,9 +1,7 @@
 /*
 const showProfileBtn = document.querySelector(".show-profile-btn");
-
 async function showProfileHandler(event) {
   event.preventDefault();
-
 showProfileBtn.addEventListener("click", showProfileHandler);
 */
 const classUserProfile = document.querySelector(".user-profile");
