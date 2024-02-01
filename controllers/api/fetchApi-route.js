@@ -4,7 +4,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
+  //  console.log(req.body);
     const response = await fetch(req.body.url, {
       method: "GET",
       headers: {
