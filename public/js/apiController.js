@@ -9,17 +9,19 @@ queryInput.addEventListener("input", function () {
   url = `https://deezerdevs-deezer.p.rapidapi.com/search?q=${queryText}`;
 });
 
-const options = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "d234ba8234msh21b763e119aeb38p18fabdjsnd2b69705b260",
-    "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-  },
-};
-
 async function fetchData() {
   try {
-    const response = await fetch(url, options);
+    // const response = await fetch(url, options);
+    // call backend route to fetch dezzer api
+    const response = await fetch("/api/fetchApi", {
+      method: "POST",
+      body: JSON.stringify({url}),
+      headers: { "Content-Type": "application/json" },
+    });
+    if(!response.ok){
+      console.log("Failed to fetch Deezer API");
+      return;
+    }
     const result = await response.json();
     // console.log(result.data);
 
@@ -32,7 +34,7 @@ async function fetchData() {
 const cardContainerEl = document.querySelector("#music-container");
 
 const songData = (data) => {
-  cardContainerEl.innerHTML = '';
+  cardContainerEl.innerHTML = "";
   likeArry = [];
 
   for (let i = 0; i < data.length; i++) {
@@ -48,7 +50,7 @@ const songData = (data) => {
       album_name: albumName,
       album_image: albumCover,
       song_name: songName,
-      music_link: musicLink
+      music_link: musicLink,
     };
 
     const artistCard = document.createElement("div");
@@ -63,8 +65,8 @@ const songData = (data) => {
     cardTitle.textContent = artistName;
 
     const cardImageLink = document.createElement("a");
-    cardImageLink.setAttribute("href",musicLink) 
-    cardImageLink.setAttribute("target","_blank");
+    cardImageLink.setAttribute("href", musicLink);
+    cardImageLink.setAttribute("target", "_blank");
 
     const cardImage = document.createElement("img");
     cardImage.classList.add("card-img-top");
@@ -82,7 +84,7 @@ const songData = (data) => {
     cardLikeBtn.addEventListener("click", function () {
       likeButtonHandler(cardLikeBtn.dataset.music);
     });
-   
+
     cardImageLink.appendChild(cardImage);
 
     cardBody.appendChild(song);
@@ -110,7 +112,13 @@ const likeButtonHandler = async (id) => {
     // Send a POST request to the API endpoint
     const response = await fetch("/api/music", {
       method: "POST",
-      body: JSON.stringify({ artist_name, album_name, album_image, song_name, music_link }),
+      body: JSON.stringify({
+        artist_name,
+        album_name,
+        album_image,
+        song_name,
+        music_link,
+      }),
       headers: { "Content-Type": "application/json" },
     });
 
@@ -124,4 +132,3 @@ const likeButtonHandler = async (id) => {
 };
 
 querySubmit.addEventListener("click", () => fetchData());
-

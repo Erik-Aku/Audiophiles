@@ -1,9 +1,7 @@
 /*
 const showProfileBtn = document.querySelector(".show-profile-btn");
-
 async function showProfileHandler(event) {
   event.preventDefault();
-
 showProfileBtn.addEventListener("click", showProfileHandler);
 */
 const classUserProfile = document.querySelector(".user-profile");
@@ -26,6 +24,7 @@ const fetchProfileData = async function () {
       const userData = await getUserProfile.json();
       //console.log("user data: ");
       //console.log(userData);
+      let IDArray = [];
 
       const userName = document.createElement("span");
       const userEmail = document.createElement("span");
@@ -43,45 +42,91 @@ const fetchProfileData = async function () {
       const MusicContainer = document.querySelector("#music-container");
       // check for array.length for condition
       if (userMusicData !== undefined && userMusicData !== null) {
-        for (i = 0; i < userMusicData.length; i++) {
-          const artistCard = document.createElement("div");
-          artistCard.classList.add("card", "col-md-4", "mx-2", "mt-3");
-          artistCard.setAttribute("style", "width: 18rem;");
+        for (let i = 0; i < userMusicData.length; i++) {
+          const cardID = "artistCardID-" + i;
+          IDArray.push(cardID);
+          // console.log(IDArray);
+          Promise.all(IDArray)
+            .then((result) => {
+              //  console.log(result);
 
-          const cardBody = document.createElement("div");
-          cardBody.classList.add("card-body");
+              const artistCard = document.createElement("div");
+              artistCard.classList.add("card", "col-md-4", "mx-2", "mt-3");
+              artistCard.setAttribute("style", "width: 18rem;");
+              artistCard.setAttribute("id", `${result[i]}`);
 
-          const cardTitle = document.createElement("h5");
-          cardTitle.classList.add("card-title");
-          cardTitle.textContent = userMusicData[i].artist_name;
+              const cardBody = document.createElement("div");
+              cardBody.classList.add("card-body");
+              cardBody.setAttribute("id", `cardBodyID-${i}`);
 
-          const cardImageLink = document.createElement("a");
-          cardImageLink.setAttribute("target", "_blank");
-          cardImageLink.setAttribute("href", userMusicData[i].music_link);
+              const cardTitle = document.createElement("h5");
+              cardTitle.classList.add("card-title");
+              cardTitle.textContent = userMusicData[i].artist_name;
 
-          const cardImage = document.createElement("img");
-          cardImage.classList.add("card-img-top");
-          cardImage.setAttribute("src", userMusicData[i].album_image);
+              const cardImageLink = document.createElement("a");
+              cardImageLink.setAttribute("target", "_blank");
+              cardImageLink.setAttribute("href", userMusicData[i].music_link);
 
-          const song = document.createElement("p");
-          song.classList.add("card-text");
-          song.setAttribute("style", "margin-bottom: 0px;");
-          song.textContent = userMusicData[i].song_name;
+              const cardImage = document.createElement("img");
+              cardImage.classList.add("card-img-top");
+              cardImage.setAttribute("src", userMusicData[i].album_image);
 
-          const albumName = document.createElement("p");
-          albumName.classList.add("card-text");
-          albumName.textContent = `Album Name: ${userMusicData[i].album_name}`;
+              const song = document.createElement("p");
+              song.classList.add("card-text");
+              song.setAttribute("style", "margin-bottom: 0px;");
+              song.textContent = userMusicData[i].song_name;
 
-          cardImageLink.appendChild(cardImage);
+              const albumName = document.createElement("p");
+              albumName.classList.add("card-text");
+              albumName.textContent = `Album Name: ${userMusicData[i].album_name}`;
 
-          cardBody.appendChild(cardTitle);
-          cardBody.appendChild(song);
-          cardBody.appendChild(albumName);
-          cardBody.appendChild(cardImageLink);
-          artistCard.appendChild(cardBody);
-          MusicContainer.appendChild(artistCard);
+              cardImageLink.appendChild(cardImage);
 
-          classUserMusiclist.appendChild(MusicContainer);
+              cardBody.appendChild(cardTitle);
+              cardBody.appendChild(song);
+              cardBody.appendChild(albumName);
+              cardBody.appendChild(cardImageLink);
+              artistCard.appendChild(cardBody);
+
+              // cardBody.appendChild(deleteButton);
+              MusicContainer.appendChild(artistCard);
+
+              classUserMusiclist.appendChild(MusicContainer);
+            })
+            .then((result2) => {
+              const deleteButton = document.createElement("button");
+              deleteButton.setAttribute("id", `buttonID-${i}`);
+              // add deleteButton styling
+              deleteButton.classList.add("deleteBtn", "bg-danger");
+              deleteButton.textContent = "X";
+              const btnReferenceID = document.getElementById(`${IDArray[i]}`);
+              //  console.log(btnReferenceID);
+              const cardBody = document.getElementById(`cardBodyID-${i}`);
+              cardBody.appendChild(deleteButton);
+              btnReferenceID.appendChild(cardBody);
+
+              deleteButton.addEventListener("click", async function (event) {
+                event.preventDefault();
+                //   console.log(btnReferenceID);
+                btnReferenceID.remove();
+               // console.log(userMusicData[i].music_id)
+                
+                const deleteMusicTag = await fetch("/api/musicTag", {
+                  method: "DELETE",
+                  body: JSON.stringify({ music_id: userMusicData[i].music_id }),
+                  headers: { "Content-Type": "application/json" },
+                });
+                  if(!deleteMusicTag.ok){
+                    console.log("Failed to delete this musicTag in the db");
+                    return;
+                  }
+                  console.log("Successfully delete this musicTag from db!")
+              });
+            })
+            
+            .catch((error) => {
+              console.log(error);
+            });
         }
       }
 
@@ -133,7 +178,7 @@ async function searchFriendhandler(event) {
         "Content-Type": "application/json",
       },
     });
-    console.log(getAllUserData)
+    console.log(getAllUserData);
     const friendData = await getAllUserData.json();
     console.log(friendData);
   } catch (error) {

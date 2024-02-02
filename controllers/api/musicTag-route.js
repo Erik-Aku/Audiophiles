@@ -17,7 +17,7 @@ router.delete("/", async (req, res) => {
     const deleteFromMusiclist = await MusicTag.destroy({
       where: {
         user_id: req.session.user_id,
-        music_id: req.body.music_body,
+        music_id: req.body.music_id,
       },
     });
     if (!deleteFromMusiclist) {
