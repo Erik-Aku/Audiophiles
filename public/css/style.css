@@ -15,3 +15,11 @@
 #container {
   color:#1a1a1a;
 }
+
+.deleteBtn {
+  position: relative;
+  right: 5%;
+  top: 5%;
+  color: white;
+  border-radius: 5%;
+}
