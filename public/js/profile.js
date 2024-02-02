@@ -109,8 +109,8 @@ const fetchProfileData = async function () {
                 event.preventDefault();
                 //   console.log(btnReferenceID);
                 btnReferenceID.remove();
-                console.log(userMusicData[i].music_id)
-                //To do: fetch MusicTag delete route
+               // console.log(userMusicData[i].music_id)
+                
                 const deleteMusicTag = await fetch("/api/musicTag", {
                   method: "DELETE",
                   body: JSON.stringify({ music_id: userMusicData[i].music_id }),
